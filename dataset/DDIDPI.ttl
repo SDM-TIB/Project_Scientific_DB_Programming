@@ -1,0 +1,212 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix time: <https://www.w3.org/TR/owl-time/>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix schema: <http://schema.org/>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix uniprotprotein: <http://purl.uniprot.org/uniprot/>.
+@prefix uniprotgene: <http://purl.uniprot.org/geneid/>.
+@prefix pubmed: <http://purl.uniprot.org/pubmed/>.
+@prefix ddidpi: <http://www.project-ddidpi.de/vocab/> .
+@base <http://www.project-ddidpi.de/>.
+
+<DrugTripleMap>
+a rr:TriplesMap;
+        rml:logicalSource [
+          rml:source "dataset/Drugs.csv";
+          rml:referenceFormulation ql:CSV
+          ];
+
+          rr:subjectMap [
+            rr:template "http://www.project-ddidpi.de/Drug/{DrugID}";
+            rr:class ddidpi:Drug
+            ];
+
+         rr:predicateObjectMap [
+  		    rr:predicate ddidpi:hasDrugID;
+          rr:objectMap [
+  			     rml:reference "DrugID";
+             rr:datatype xsd:string
+          ]
+        ];
+
+        rr:predicateObjectMap [
+  		    rr:predicate ddidpi:hasDrugName;
+  		    rr:objectMap [
+  			     rml:reference "DrugName";
+  			     rr:datatype xsd:string
+          ]
+        ];
+
+        rr:predicateObjectMap [
+          rr:predicate ddidpi:hasdbpediaResource;
+          rr:objectMap [
+          rr:template "http://dbpedia.org/resource/{DrugName}";
+          ]
+        ];
+        rr:predicateObjectMap [
+          rr:predicate ddidpi:hasAnnonationCUI;
+          rr:objectMap [
+          rr:template "http://www.project-ddidpi.de/Annotation/{DrugCUI}";
+
+          ]
+        ].
+
+
+<ProteinTripleMap>
+    a rr:TriplesMap;
+      rml:logicalSource [
+        rml:source "dataset/Proteins.csv";
+        rml:referenceFormulation ql:CSV
+      ];
+
+          rr:subjectMap [
+          rr:template "http://www.project-ddidpi.de/Protein/{ProteinID}";
+          rr:class ddidpi:Protein
+     ];
+
+        rr:predicateObjectMap [
+          rr:predicate ddidpi:hasProteinID;
+          rr:objectMap [
+          rr:template "http://purl.uniprot.org/uniprot/{ProteinID}";
+          ]
+
+
+
+    ].
+
+
+
+<DDITripleMap>
+          a rr:TriplesMap;
+            rml:logicalSource [
+              rml:source "dataset/PharmacokineticDDI.csv";
+              rml:referenceFormulation ql:CSV
+            ];
+
+                rr:subjectMap [
+                rr:template "http://www.project-ddidpi.de/DDI/{EffectorDrugID}-{AffectedDrugID}-{Effect}";
+                rr:class ddidpi:DDI
+           ];
+
+
+            rr:predicateObjectMap [
+                rr:predicate ddidpi:hasPrecipitantDrug;
+                  rr:objectMap [
+                 rr:template "http://www.project-ddidpi.de/Drug/{EffectorDrugID}";
+                ]
+            ];
+            rr:predicateObjectMap [
+                rr:predicate ddidpi:hasObjectDrug;
+                  rr:objectMap [
+                 rr:template "http://www.project-ddidpi.de/Drug/{AffectedDrugID}";
+                ]
+            ];
+            rr:predicateObjectMap [
+                rr:predicate ddidpi:hasEffect;
+                  rr:objectMap [
+                   rml:reference "Effect";
+                   rr:datatype xsd:string
+                ]
+            ];
+            rr:predicateObjectMap [
+                rr:predicate ddidpi:hasImpact;
+                  rr:objectMap [
+                   rml:reference "Impact";
+                   rr:datatype xsd:string
+                ]
+            ].#;
+            #rr:predicateObjectMap [
+            #    rr:predicate ddidpi:hasInteractionDescription;
+            #      rr:objectMap [
+            #       rml:reference "Interaction";
+            #       rr:datatype xsd:string
+            #    ]
+            #].
+			
+
+<DPITripleMap>
+  a rr:TriplesMap;
+      rml:logicalSource [
+      rml:source "dataset/DrugsAndProteins.csv";
+      rml:referenceFormulation ql:CSV
+    ];
+
+    rr:subjectMap [
+      rr:template "http://www.project-ddidpi.de/DPI/{drugbank_id}-{uniprot_id}";
+        rr:class ddidpi:DPI
+     ];
+
+      rr:predicateObjectMap [
+        rr:predicate ddidpi:hasDrugID;
+        rr:objectMap [
+  	   rr:template "http://www.project-ddidpi.de/Drug/{drugbank_id}"
+         ]
+      ];
+    rr:predicateObjectMap [
+        rr:predicate ddidpi:hasProteinID;
+          rr:objectMap [
+      #   rr:template "http://www.project-ddidpi.de/Protein/{uniprot_id}";
+        rr:template "http://purl.uniprot.org/uniprot/{uniprot_id}"
+        ]
+    ];
+          rr:predicateObjectMap [
+              rr:predicate ddidpi:hasActions;
+                rr:objectMap [
+                 rml:reference "actions";
+                 rr:datatype xsd:string
+              ]
+          ];
+          rr:predicateObjectMap [
+              rr:predicate ddidpi:hasKnownAction;
+                rr:objectMap [
+                 rml:reference "known_action";
+                 rr:datatype xsd:string
+              ]
+          ];
+          rr:predicateObjectMap [
+              rr:predicate ddidpi:hasOrganism;
+                rr:objectMap [
+                 rml:reference "organism";
+                 rr:datatype xsd:string
+              ]
+          ];
+          rr:predicateObjectMap [
+              rr:predicate ddidpi:hasEntrez_gene_id;
+                rr:objectMap [
+              #   rml:reference "entrez_gene_id";
+              #   rr:datatype xsd:string
+                rr:template "http://purl.uniprot.org/geneid/{entrez_gene_id}"
+              ]
+          ];
+          rr:predicateObjectMap [
+              rr:predicate ddidpi:hasCategory;
+                rr:objectMap [
+                 rml:reference "category";
+                 rr:datatype xsd:string
+              ]
+          ].
+
+
+<PubmedTripleMap>
+  a rr:TriplesMap;
+      rml:logicalSource [
+      rml:source "dataset/dpi_pubmed.csv";
+      rml:referenceFormulation ql:CSV
+    ];
+
+    rr:subjectMap [
+      rr:template "http://www.project-ddidpi.de/DPI/{drugbank_id}-{uniprot_id}";
+        rr:class ddidpi:DPI
+    ];
+
+    rr:predicateObjectMap [
+		rr:predicate ddidpi:hasPubMedID;
+        rr:objectMap [
+			rr:template "http://purl.uniprot.org/pubmed/{pubmed_ids}"
+			]
+    ].
