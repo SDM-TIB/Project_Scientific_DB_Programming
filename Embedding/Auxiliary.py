@@ -81,9 +81,9 @@ def get_learned_embeddings(model):
 def create_dataframe_predicted_entities(entity_embedding_tensor, entity, training):
     df = pd.DataFrame(entity_embedding_tensor.cpu().detach().numpy())
     df['target'] = list(training.entity_to_id)
-    #new_df = df.loc[df.target.isin(list(entity))]
-    #return new_df.iloc[:, :-1], new_df
-    return df
+    new_df = df.loc[df.target.isin(list(entity))]
+    return new_df.iloc[:, :-1], new_df
+    # return df
 
 
 def elbow_KMeans(matrix, k_min, k_max):
