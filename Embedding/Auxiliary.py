@@ -16,19 +16,94 @@ from yellowbrick.cluster import KElbowVisualizer
 from sklearn.decomposition import PCA
 from rdflib import Graph
 from rdflib.plugins.sparql.processor import SPARQLResult
+import sys
+import torch
 
 
-def load_dataset(name):
-    triple_data = open(name).read().strip()
-    data = np.array([triple.split(' ')[:-1] for triple in triple_data.split('\n')])  # removing ' .'
-    triple = []
-    for t in data:
-        t[2] = ' '.join(t[2:])
-        t = t[:3]
-        triple.append(t)
-    triple = np.array(triple)
-    tf_data = TriplesFactory.from_labeled_triples(triples=triple)
-    return tf_data, triple
+# # Load Train data
+def load_dataset(path, name):
+    triple_data = open(path + name).read().strip()
+    data = np.array([triple.split('\t') for triple in triple_data.split('\n')])
+    tf_data = TriplesFactory.from_labeled_triples(triples=data)
+    return tf_data, triple_data
+
+
+def create_model(tf_training, tf_testing, embedding, n_epoch, path, fold):
+    results = pipeline(
+        training=tf_training,
+        testing=tf_testing,
+        model=embedding,  # 'TransE',  #'RotatE'
+        # stopper='early',
+        # stopper_kwargs=dict(frequency=5, patience=2, relative_delta=0.002),
+#         training_loop='sLCWA',
+#         negative_sampler='bernoulli',
+        negative_sampler_kwargs=dict(
+        filtered=True,
+        ),
+        # Training configuration
+        training_kwargs=dict(
+            num_epochs=n_epoch,
+            use_tqdm_batch=False,
+        ),
+        # Runtime configuration
+        random_seed=1235,
+        device='gpu',
+    )
+    model = results.model
+    results.save_to_directory(path + embedding + str(fold))
+    return model, results
+
+
+# # Predict links (Head prediction)
+def predict_heads(model, prop, obj, tf_testing):  # triples_factory=results.training
+    predicted_heads_df = predict.get_head_prediction_df(model, prop, obj, triples_factory=tf_testing)
+    return predicted_heads_df
+
+
+# Filter the prediction by the head 'treatment_drug:treatment'. We are not interested in predict another links
+def filter_prediction(predicted_heads_df, constraint):
+    predicted_heads_df = predicted_heads_df[predicted_heads_df.head_label.str.contains(constraint)]
+    return predicted_heads_df
+
+
+def filter_entity(kg, c1, c2):
+    sub = kg[(kg[0].str.contains(c1)) | (kg[0].str.contains(c2))][0].values
+    obj = kg[(kg[2].str.contains(c1)) | (kg[2].str.contains(c2))][2].values
+    entity = list(sub) + list(obj)
+    entity = set(entity)
+    return entity
+
+
+def get_config(config_file):
+    config = pd.read_csv(config_file, delimiter=";")  # 'config_G1.csv'
+    models = config.model.values[0].split(',')
+    epochs = config.epochs.values[0]
+    k = config.k_fold.values[0]
+    path = config.path.values[0]
+    graph_name = config.graph_name.values[0]
+    return models, epochs, k, path, graph_name
+
+
+def reset_index(predicted_heads):
+    predicted_heads.reset_index(inplace=True)
+    predicted_heads.drop(columns=['index'], inplace=True)
+    return predicted_heads
+
+
+def pipeline_kge(args):
+    models, epochs, k, path, graph_name = get_config(args)
+    # models = ['TransH','RotatE', 'TransE', 'TransD', 'HolE', 'TransR', 'ERMLP', 'QuatE', 'RESCAL', 'SE', 'UM']
+    models = ['TransH']
+    for m in models:
+        precision = 0
+        recall = 0
+        f_measure = 0
+        for i in range(0, k):
+            tf_dataset, triple_dataset = load_dataset(path, 'plot_ddidpi_v1.ttl')
+            training, testing = tf_dataset.split(random_state=1234)
+            
+            model, results = create_model(training, testing, m, epochs, path, i + 1)
+            #model = torch.load(path + m + str(i + 1) + '/trained_model.pkl') # , map_location='cpu'
 
 
 def filter_prediction(predicted_heads_df, constraint):
@@ -125,17 +200,17 @@ def plot_cluster(num_cls, new_df, n):
     plt.show()
 
 
-def plot_drug_protein_embedding(new_df, drug, protein):
+def plot_two_classes(new_df, c1, c2, c1_label, c2_label):
     # new_df['cls'] = 'safe'
-    new_df.loc[new_df.target.isin(drug), 'cls'] = 'drug'
-    new_df.loc[new_df.target.isin(protein), 'cls'] = 'protein'
+    new_df.loc[new_df.target.isin(c1), 'cls'] = c1_label
+    new_df.loc[new_df.target.isin(c2), 'cls'] = c2_label
     X = new_df.iloc[:, :-2].copy()
 
     # define and map colors
     col = list(colors.cnames.values())
     # col = [col[9], col[3]]
     col = [mcolors.CSS4_COLORS['brown'], mcolors.CSS4_COLORS['lightcoral']]
-    index = ['drug', 'protein']
+    index = [c1_label, c2_label]
     color_dictionary = dict(zip(index, col))
     new_df['c'] = new_df.cls.map(color_dictionary)
     #####PLOT#####
@@ -160,9 +235,46 @@ def plot_drug_protein_embedding(new_df, drug, protein):
     # else:
     #     plt.title('Treatments in ' + '${\cal{T\_KG}}_{random}$', loc='left', fontsize=22)
     #plt.savefig(fname='Plots/PCA_KG_' + str(n) + ".png", format='png', bbox_inches='tight', dpi=300, transparent=True)
-    #plt.savefig(fname='Plots/PCA_KG_' + str(n) + ".pdf", format='pdf', bbox_inches='tight')
+    plt.savefig(fname='Plots/PCA' + c1_label+'_'+c2_label + '.pdf', format='pdf', bbox_inches='tight')
     plt.show()
 
+
+def plot_KGE(new_df, entity_type):
+    for i in range(new_df.shape[0]):
+        t = new_df.iloc[i]['target']
+        new_df.iloc[i]['cls'] = entity_type[t]
+    X = new_df.iloc[:, :-2].copy()
+
+    # define and map colors
+    col = list(colors.cnames.values())[:len(index)]
+    index = list(new_df.cls.unique())
+    color_dictionary = dict(zip(index, col))
+    new_df['c'] = new_df.cls.map(color_dictionary)
+    #####PLOT#####
+    from matplotlib.lines import Line2D
+    fig, ax = plt.subplots(1, figsize=(8, 8))
+    # plot data
+    pca = PCA(n_components=2).fit(X)
+    pca_c = pca.transform(X)
+    plt.scatter(pca_c[:, 0], pca_c[:, 1], c=new_df.c, s=50)  # alpha=0.6,
+
+    # create a list of legend elemntes
+    ## markers / records
+    legend_elements = [Line2D([0], [0], marker='o', color='w', label=key,
+                              markerfacecolor=mcolor, markersize=10) for key, mcolor in color_dictionary.items()]
+    # plot legend
+    plt.legend(handles=legend_elements, loc='upper right', fontsize=16)
+    # title and labels
+    # if n == 1:
+    #     plt.title('Treatments in ' + '${\cal{T\_KG}}_{basic}$', loc='left', fontsize=22)
+    # elif n == 2:
+    #     plt.title('Treatments in ' + '$\cal{T\_KG}$', loc='left', fontsize=22)
+    # else:
+    #     plt.title('Treatments in ' + '${\cal{T\_KG}}_{random}$', loc='left', fontsize=22)
+    #plt.savefig(fname='Plots/PCA_KG_' + str(n) + ".png", format='png', bbox_inches='tight', dpi=300, transparent=True)
+    plt.savefig(fname='Plots/PCA.pdf', format='pdf', bbox_inches='tight')
+    plt.show()
+    
 
 def load_graph(file_name):
     g1 = Graph()
