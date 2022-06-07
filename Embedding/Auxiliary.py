@@ -99,7 +99,7 @@ def pipeline_kge(args):
         recall = 0
         f_measure = 0
         for i in range(0, k):
-            tf_dataset, triple_dataset = load_dataset(path, 'plot_ddidpi_v1.ttl')
+            tf_dataset, triple_dataset = load_dataset(path, 'ddidpi_v1.ttl')
             training, testing = tf_dataset.split(random_state=1234)
             
             model, results = create_model(training, testing, m, epochs, path, i + 1)
@@ -201,7 +201,7 @@ def plot_cluster(num_cls, new_df, n):
 
 
 def plot_two_classes(new_df, c1, c2, c1_label, c2_label):
-    # new_df['cls'] = 'safe'
+    new_df['cls'] = ''
     new_df.loc[new_df.target.isin(c1), 'cls'] = c1_label
     new_df.loc[new_df.target.isin(c2), 'cls'] = c2_label
     X = new_df.iloc[:, :-2].copy()
@@ -240,14 +240,18 @@ def plot_two_classes(new_df, c1, c2, c1_label, c2_label):
 
 
 def plot_KGE(new_df, entity_type):
+    new_df['cls'] = ''
+    new_df.reset_index(inplace=True)
+    new_df.drop(columns=['index'], inplace=True)
     for i in range(new_df.shape[0]):
         t = new_df.iloc[i]['target']
-        new_df.iloc[i]['cls'] = entity_type[t]
+        # new_df.iloc[i]['cls'] = entity_type[t]
+        new_df.at[i, 'cls'] = entity_type[t]
     X = new_df.iloc[:, :-2].copy()
 
     # define and map colors
-    col = list(colors.cnames.values())[:len(index)]
     index = list(new_df.cls.unique())
+    col = list(colors.cnames.values())[:len(index)]
     color_dictionary = dict(zip(index, col))
     new_df['c'] = new_df.cls.map(color_dictionary)
     #####PLOT#####
