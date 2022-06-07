@@ -10,14 +10,14 @@
 @prefix prov: <http://www.w3.org/ns/prov#>.
 @prefix uniprotprotein: <http://purl.uniprot.org/uniprot/>.
 @prefix uniprotgene: <http://purl.uniprot.org/geneid/>.
-@prefix pubmed: <http://purl.uniprot.org/pubmed/>.
+@prefix pubmed: <http://purl.uniprot.org/uniprot/pubmed/>.
 @prefix ddidpi: <http://www.project-ddidpi.de/vocab/> .
 @base <http://www.project-ddidpi.de/>.
 
 <DrugTripleMap>
 a rr:TriplesMap;
         rml:logicalSource [
-          rml:source "dataset/Drugs.csv";
+          rml:source "C:/Users/begaliha/Documents/Ariam_Hanan/mapping/files/Drugs.csv";
           rml:referenceFormulation ql:CSV
           ];
 
@@ -43,9 +43,9 @@ a rr:TriplesMap;
         ];
 
         rr:predicateObjectMap [
-          rr:predicate ddidpi:hasdbpediaResource;
+          rr:predicate ddidpi:hasDBpediaResource;
           rr:objectMap [
-          rr:template "http://dbpedia.org/resource/{DrugName}";
+          rr:template "http://dbpedia.org/DBpediaResource/{DrugName}";
           ]
         ];
         rr:predicateObjectMap [
@@ -56,11 +56,10 @@ a rr:TriplesMap;
           ]
         ].
 
-
 <ProteinTripleMap>
     a rr:TriplesMap;
       rml:logicalSource [
-        rml:source "dataset/Proteins.csv";
+        rml:source "C:/Users/begaliha/Documents/Ariam_Hanan/mapping/files/Proteins.csv";
         rml:referenceFormulation ql:CSV
       ];
 
@@ -80,11 +79,10 @@ a rr:TriplesMap;
     ].
 
 
-
 <DDITripleMap>
           a rr:TriplesMap;
             rml:logicalSource [
-              rml:source "dataset/PharmacokineticDDI.csv";
+              rml:source "C:/Users/begaliha/Documents/Ariam_Hanan/mapping/files/PharmacokineticDDI.csv";
               rml:referenceFormulation ql:CSV
             ];
 
@@ -119,94 +117,93 @@ a rr:TriplesMap;
                    rml:reference "Impact";
                    rr:datatype xsd:string
                 ]
-            ].#;
-            #rr:predicateObjectMap [
-            #    rr:predicate ddidpi:hasInteractionDescription;
-            #      rr:objectMap [
-            #       rml:reference "Interaction";
-            #       rr:datatype xsd:string
-            #    ]
-            #].
-			
-
+            ];
+            rr:predicateObjectMap [
+                rr:predicate ddidpi:hasInteractionDescription;
+                  rr:objectMap [
+                   rml:reference "Interaction";
+                   rr:datatype xsd:string
+                ]
+            ].
 <DPITripleMap>
   a rr:TriplesMap;
       rml:logicalSource [
-      rml:source "dataset/DrugsAndProteins.csv";
+      rml:source "C:/Users/begaliha/Documents/Ariam_Hanan/mapping/files/DPI.csv";
       rml:referenceFormulation ql:CSV
     ];
 
     rr:subjectMap [
-      rr:template "http://www.project-ddidpi.de/DPI/{drugbank_id}-{uniprot_id}";
+      rr:template "http://www.project-ddidpi.de/DPI/{Drugbank_id}-{Uniprot_id}";
         rr:class ddidpi:DPI
      ];
 
       rr:predicateObjectMap [
-        rr:predicate ddidpi:hasDrugID;
+        rr:predicate ddidpi:hasDrugIDforInteraction;
         rr:objectMap [
-  	   rr:template "http://www.project-ddidpi.de/Drug/{drugbank_id}"
+  	   rr:template "http://www.project-ddidpi.de/Drug/{Drugbank_id}"
          ]
       ];
     rr:predicateObjectMap [
-        rr:predicate ddidpi:hasProteinID;
+        rr:predicate ddidpi:hasProteinIDforInteraction;
           rr:objectMap [
-      #   rr:template "http://www.project-ddidpi.de/Protein/{uniprot_id}";
-        rr:template "http://purl.uniprot.org/uniprot/{uniprot_id}"
+      #   rr:template "http://www.project-ddidpi.de/Protein/{Uniprot_id}";
+        rr:template "http://purl.uniprot.org/uniprot/{Uniprot_id}"
         ]
     ];
           rr:predicateObjectMap [
               rr:predicate ddidpi:hasActions;
                 rr:objectMap [
-                 rml:reference "actions";
+                 rml:reference "Actions";
                  rr:datatype xsd:string
               ]
           ];
           rr:predicateObjectMap [
               rr:predicate ddidpi:hasKnownAction;
                 rr:objectMap [
-                 rml:reference "known_action";
+                 rml:reference "Known_action";
                  rr:datatype xsd:string
               ]
           ];
           rr:predicateObjectMap [
               rr:predicate ddidpi:hasOrganism;
                 rr:objectMap [
-                 rml:reference "organism";
+                 rml:reference "Organism";
                  rr:datatype xsd:string
               ]
           ];
           rr:predicateObjectMap [
               rr:predicate ddidpi:hasEntrez_gene_id;
                 rr:objectMap [
-              #   rml:reference "entrez_gene_id";
-              #   rr:datatype xsd:string
-                rr:template "http://purl.uniprot.org/geneid/{entrez_gene_id}"
+
+                rr:template "http://purl.uniprot.org/geneid/{Entrez_gene_id}"
               ]
           ];
           rr:predicateObjectMap [
               rr:predicate ddidpi:hasCategory;
                 rr:objectMap [
-                 rml:reference "category";
+                 rml:reference "Category";
                  rr:datatype xsd:string
               ]
           ].
 
+<DPIpubmedTripleMap>
+a rr:TriplesMap;
+  rml:logicalSource [
+  rml:source "C:/Users/begaliha/Documents/Ariam_Hanan/mapping/files/dpi_pubmed.csv";
+  rml:referenceFormulation ql:CSV
+];
 
-<PubmedTripleMap>
-  a rr:TriplesMap;
-      rml:logicalSource [
-      rml:source "dataset/dpi_pubmed.csv";
-      rml:referenceFormulation ql:CSV
-    ];
+rr:subjectMap [
+  rr:template "http://www.project-ddidpi.de/DPI/{Drugbank_id}-{Uniprot_id}";
+    rr:class ddidpi:DPI
+ ];
 
-    rr:subjectMap [
-      rr:template "http://www.project-ddidpi.de/DPI/{drugbank_id}-{uniprot_id}";
-        rr:class ddidpi:DPI
-    ];
 
-    rr:predicateObjectMap [
-		rr:predicate ddidpi:hasPubMedID;
-        rr:objectMap [
-			rr:template "http://purl.uniprot.org/pubmed/{pubmed_ids}"
-			]
-    ].
+
+      rr:predicateObjectMap [
+          rr:predicate ddidpi:hasPubMedID;
+            rr:objectMap [
+             rr:template "http://purl.uniprot.org/uniprot/pubmed/{Pubmed_ids}"
+
+         ]
+     ].

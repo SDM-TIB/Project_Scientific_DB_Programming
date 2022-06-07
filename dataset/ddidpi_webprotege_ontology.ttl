@@ -1,0 +1,309 @@
+@prefix : <urn:webprotege:ontology:826ed273-82df-49d8-bc79-2ee9f4bd90ff#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.project-ddidpi.de/>.
+
+<http://www.project-ddidpi.de/> rdf:type owl:Ontology .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/date
+<http://purl.org/dc/elements/1.1/date> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.project-ddidpi.de/vocab/disjoinwith
+<http://www.project-ddidpi.de/vocab/disjoinwith> rdf:type owl:ObjectProperty ;
+                                                 rdfs:label "disjoinwith"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasAnnonationCUI
+<http://www.project-ddidpi.de/vocab/hasAnnonationCUI> rdf:type owl:ObjectProperty ;
+                                                      rdfs:subPropertyOf owl:topObjectProperty ;
+                                                      rdfs:domain <http://www.project-ddidpi.de/vocab/Drug> ;
+                                                      rdfs:range <http://www.project-ddidpi.de/vocab/Annotation> ;
+                                                      <http://purl.org/dc/elements/1.1/date> "2022-05-13T00:00:00"@en ;
+                                                      rdfs:comment "This property shows the association of Drug to Annotation."@en ;
+                                                      rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                      rdfs:label "hasAnnonationCUI"@en ;
+                                                      owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasDBpediaResource
+<http://www.project-ddidpi.de/vocab/hasDBpediaResource> rdf:type owl:ObjectProperty ;
+                                                        rdfs:subPropertyOf owl:topObjectProperty ;
+                                                        rdfs:domain <http://www.project-ddidpi.de/vocab/Drug> ;
+                                                        rdfs:range <http://www.project-ddidpi.de/vocab/DBpediaResource> ;
+                                                        <http://purl.org/dc/elements/1.1/date> "2022-06-04T00:00:00"@en ;
+                                                        rdfs:comment "This property shows the association of Drug to  DBpediaResource."@en ;
+                                                        rdfs:isDefinedBy "Hanan, Ariam."^^xsd:string ;
+                                                        rdfs:label "hasDBpediaResource"@en ;
+                                                        owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasDrugIDforInteraction
+<http://www.project-ddidpi.de/vocab/hasDrugIDforInteraction> rdf:type owl:ObjectProperty ;
+                                                             rdfs:domain <http://www.project-ddidpi.de/vocab/DPI> ;
+                                                             rdfs:range <http://www.project-ddidpi.de/vocab/Drug> ;
+                                                             <http://purl.org/dc/elements/1.1/date> "2023-06-04T00:00:00"@en ;
+                                                             rdfs:comment "This property shows the association of DPI to Drug."@en ;
+                                                             rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                             rdfs:label "hasDrugIDforInteraction"@en ;
+                                                             owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasObjectDrug
+<http://www.project-ddidpi.de/vocab/hasObjectDrug> rdf:type owl:ObjectProperty ;
+                                                   rdfs:subPropertyOf owl:topObjectProperty ;
+                                                   rdfs:domain <http://www.project-ddidpi.de/vocab/DDI> ;
+                                                   rdfs:range <http://www.project-ddidpi.de/vocab/Drug> ;
+                                                   <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                                   rdfs:comment "This property shows the association of DDI to Drug."@en ;
+                                                   rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                   rdfs:label "hasObjectDrug"@en ;
+                                                   owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasPrecipitantDrug
+<http://www.project-ddidpi.de/vocab/hasPrecipitantDrug> rdf:type owl:ObjectProperty ;
+                                                        rdfs:subPropertyOf owl:topObjectProperty ;
+                                                        rdfs:domain <http://www.project-ddidpi.de/vocab/DDI> ;
+                                                        rdfs:range <http://www.project-ddidpi.de/vocab/Drug> ;
+                                                        <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                                        rdfs:comment "This property shows the association of DDI to Drug."@en ;
+                                                        rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                        rdfs:label "hasPrecipitantDrug"@en ;
+                                                        owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasProteinIDforInteraction
+<http://www.project-ddidpi.de/vocab/hasProteinIDforInteraction> rdf:type owl:ObjectProperty ;
+                                                                rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                rdfs:domain <http://www.project-ddidpi.de/vocab/DPI> ;
+                                                                rdfs:range <http://www.project-ddidpi.de/vocab/Protein> ;
+                                                                <http://purl.org/dc/elements/1.1/date> "2022-06-03T00:00:00"@en ;
+                                                                rdfs:comment "This property shows the association of DPI to Protein."@en ;
+                                                                rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                                rdfs:label "hasProteinIDforInteraction"@en ;
+                                                                owl:versionInfo "v1.0"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.project-ddidpi.de/vocab/hasActions
+<http://www.project-ddidpi.de/vocab/hasActions> rdf:type owl:DatatypeProperty ;
+                                                rdfs:subPropertyOf owl:topDataProperty ;
+                                                rdfs:domain <http://www.project-ddidpi.de/vocab/DPI> ;
+                                                rdfs:range xsd:string ;
+                                                <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                                rdfs:comment "This attribute represents the action of  drug-protein interaction."@en ;
+                                                rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                rdfs:label "hasActions"@en ;
+                                                owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasCategory
+<http://www.project-ddidpi.de/vocab/hasCategory> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:subPropertyOf owl:topDataProperty ;
+                                                 rdfs:domain <http://www.project-ddidpi.de/vocab/DPI> ;
+                                                 rdfs:range xsd:string ;
+                                                 <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                                 rdfs:comment "This attribute represents the category of the proteins that interact with a drug."@en ;
+                                                 rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                 rdfs:label "hasCategory"@en ;
+                                                 owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasDrugID
+<http://www.project-ddidpi.de/vocab/hasDrugID> rdf:type owl:DatatypeProperty ;
+                                               rdfs:subPropertyOf owl:topDataProperty ;
+                                               rdfs:domain <http://www.project-ddidpi.de/vocab/Drug> ;
+                                               rdfs:range xsd:string ;
+                                               <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                               rdfs:comment "This attribute represents the unique identification number of a drug that was given by the drug bank."@en ;
+                                               rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                               rdfs:label "hasDrugID"@en ;
+                                               owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasDrugName
+<http://www.project-ddidpi.de/vocab/hasDrugName> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:subPropertyOf owl:topDataProperty ;
+                                                 rdfs:domain <http://www.project-ddidpi.de/vocab/Drug> ;
+                                                 rdfs:range xsd:string ;
+                                                 <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                                 rdfs:comment "This attribute represents the name of a protein."@en ;
+                                                 rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                 rdfs:label "hasDrugName"@en ;
+                                                 owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasEffect
+<http://www.project-ddidpi.de/vocab/hasEffect> rdf:type owl:DatatypeProperty ;
+                                               rdfs:subPropertyOf owl:topDataProperty ;
+                                               rdfs:domain <http://www.project-ddidpi.de/vocab/DDI> ;
+                                               rdfs:range xsd:string ;
+                                               <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                               rdfs:comment "This attribute represents the effect of drug-drug interaction or pharmacokinetics."@en ;
+                                               rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                               rdfs:label "hasEffect"@en ;
+                                               owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasEntrez_gene_id
+<http://www.project-ddidpi.de/vocab/hasEntrez_gene_id> rdf:type owl:DatatypeProperty ;
+                                                       rdfs:subPropertyOf owl:topDataProperty ;
+                                                       rdfs:domain <http://www.project-ddidpi.de/vocab/DPI> ;
+                                                       rdfs:range xsd:string ;
+                                                       <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                                       rdfs:comment "This attribute represents the gene identifier number of a protein that was given by Entrez."@en ;
+                                                       rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                       rdfs:label "hasEntrez_gene_id"@en ;
+                                                       owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasImpact
+<http://www.project-ddidpi.de/vocab/hasImpact> rdf:type owl:DatatypeProperty ;
+                                               rdfs:subPropertyOf owl:topDataProperty ;
+                                               rdfs:domain <http://www.project-ddidpi.de/vocab/DDI> ;
+                                               rdfs:range xsd:string ;
+                                               <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                               rdfs:comment "This attribute represents the impact of drug-drug interaction or pharmacokinetics."@en ;
+                                               rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                               rdfs:label "hasImpact"@en ;
+                                               owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasInteractionDescription
+<http://www.project-ddidpi.de/vocab/hasInteractionDescription> rdf:type owl:DatatypeProperty ;
+                                                               rdfs:subPropertyOf owl:topDataProperty ;
+                                                               rdfs:domain <http://www.project-ddidpi.de/vocab/DDI> ;
+                                                               rdfs:range xsd:string ;
+                                                               <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                                               rdfs:comment "This attribute represents the description of the interactions between two drugs."@en ;
+                                                               rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                               rdfs:label "hasInteractionDescription"@en ;
+                                                               owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasKnownAction
+<http://www.project-ddidpi.de/vocab/hasKnownAction> rdf:type owl:DatatypeProperty ;
+                                                    rdfs:subPropertyOf owl:topDataProperty ;
+                                                    rdfs:domain <http://www.project-ddidpi.de/vocab/DPI> ;
+                                                    rdfs:range xsd:string ;
+                                                    <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                                    rdfs:comment "This attribute represents the known action of drug-protein interaction."@en ;
+                                                    rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                    rdfs:label "hasKnownAction"@en ;
+                                                    owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasOrganism
+<http://www.project-ddidpi.de/vocab/hasOrganism> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:subPropertyOf owl:topDataProperty ;
+                                                 rdfs:domain <http://www.project-ddidpi.de/vocab/DPI> ;
+                                                 rdfs:range xsd:string ;
+                                                 <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                                 rdfs:comment "This attribute represents the organism of drug-protein interaction that in whom occurred."@en ;
+                                                 rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                 rdfs:label "hasOrganism"@en ;
+                                                 owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasProteinID
+<http://www.project-ddidpi.de/vocab/hasProteinID> rdf:type owl:DatatypeProperty ;
+                                                  rdfs:subPropertyOf owl:topDataProperty ;
+                                                  rdfs:domain <http://www.project-ddidpi.de/vocab/Protein> ;
+                                                  rdfs:range xsd:string ;
+                                                  <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                                  rdfs:comment "This attribute represents the unique identification number of a protein that was given by the UniProt."@en ;
+                                                  rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                  rdfs:label "hasProteinID"@en ;
+                                                  owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/hasPubMedID
+<http://www.project-ddidpi.de/vocab/hasPubMedID> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:subPropertyOf owl:topDataProperty ;
+                                                 <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                                 rdfs:comment "This attribute represents the PubMed identifier number that is used as a reference for drug-protein interaction."@en ;
+                                                 rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                 rdfs:label "hasPubMedID"@en ;
+                                                 owl:versionInfo "v1.0"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.project-ddidpi.de/vocab/Annotation
+<http://www.project-ddidpi.de/vocab/Annotation> rdf:type owl:Class ;
+                                                rdfs:subClassOf owl:Thing ;
+                                                <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                                rdfs:comment "This class represents the concept of linking entity mentions (in our case mostly biological terminologies) with their background knowledge by exploiting external knowledge bases e.g. UMLS, Uniprot, etc."@en ;
+                                                rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                rdfs:label "Annotation"@en ;
+                                                owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/DBpediaResource
+<http://www.project-ddidpi.de/vocab/DBpediaResource> rdf:type owl:Class ;
+                                                     rdfs:subClassOf owl:Thing ;
+                                                     <http://purl.org/dc/elements/1.1/date> "2022-06-04T00:00:00"@en ;
+                                                     rdfs:comment "This class represents the concept of linking entity mentions with exernal resource of DBpedia."@en ;
+                                                     rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                                     rdfs:label "DBpediaResource"@en ;
+                                                     owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/DDI
+<http://www.project-ddidpi.de/vocab/DDI> rdf:type owl:Class ;
+                                         rdfs:subClassOf owl:Thing ;
+                                         <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                         rdfs:comment "This class represents all interactions between precipitant and object drugs in our cohort."@en ;
+                                         rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                         rdfs:label "DDI"@en ;
+                                         owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/DPI
+<http://www.project-ddidpi.de/vocab/DPI> rdf:type owl:Class ;
+                                         rdfs:subClassOf owl:Thing ;
+                                         <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                         rdfs:comment "This class represents all interactions between drugs and proteins in our cohort."@en ;
+                                         rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                         rdfs:label "DPI"@en ;
+                                         owl:versionInfo "v1.0"@en .
+
+
+###  http://www.project-ddidpi.de/vocab/Drug
+<http://www.project-ddidpi.de/vocab/Drug> rdf:type owl:Class ;
+                                          rdfs:subClassOf owl:Thing ;
+                                          <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                          rdfs:comment "This class represents all drugs that interact with each other and proteins in our cohort."@en ;
+                                          rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                          rdfs:label "Drug"@en ;
+                                          owl:versionInfo "v1.0"^^xsd:string .
+
+
+###  http://www.project-ddidpi.de/vocab/Protein
+<http://www.project-ddidpi.de/vocab/Protein> rdf:type owl:Class ;
+                                             rdfs:subClassOf owl:Thing ;
+                                             <http://purl.org/dc/elements/1.1/date> "2022-05-11T00:00:00"@en ;
+                                             rdfs:comment "This class represents all proteins that interact with drugs in our cohort."@en ;
+                                             rdfs:isDefinedBy "Hanan, Ariam."@en ;
+                                             rdfs:label "Protein"@en ;
+                                             owl:versionInfo "v1.0"@en .
+
+
+###  Generated by the OWL API (version 4.5.13) https://github.com/owlcs/owlapi
