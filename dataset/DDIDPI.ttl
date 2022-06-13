@@ -14,10 +14,10 @@
 @prefix ddidpi: <http://www.project-ddidpi.de/vocab/> .
 @base <http://www.project-ddidpi.de/>.
 
-<DrugNameCuiTripleMap>
+<DrugTripleMap>
 a rr:TriplesMap;
         rml:logicalSource [
-          rml:source "dataset/DrugsNameCui.csv";
+          rml:source "dataset/Drugs.csv";
           rml:referenceFormulation ql:CSV
           ];
 
@@ -55,20 +55,6 @@ a rr:TriplesMap;
 
           ]
         ].
-		
-
-<DrugTripleMap>
-a rr:TriplesMap;
-        rml:logicalSource [
-          rml:source "dataset/Drugs.csv";
-          rml:referenceFormulation ql:CSV
-          ];
-
-          rr:subjectMap [
-            rr:template "http://www.project-ddidpi.de/Drug/{DrugID}";
-            rr:class ddidpi:Drug
-            ].
-		
 
 
 <ProteinTripleMap>
