@@ -17,7 +17,7 @@
 <DrugTripleMap>
 a rr:TriplesMap;
         rml:logicalSource [
-          rml:source "C:/Users/begaliha/Documents/Ariam_Hanan/mapping/files/Drugs.csv";
+          rml:source "dataset/Drugs.csv";
           rml:referenceFormulation ql:CSV
           ];
 
@@ -59,7 +59,7 @@ a rr:TriplesMap;
 <ProteinTripleMap>
     a rr:TriplesMap;
       rml:logicalSource [
-        rml:source "C:/Users/begaliha/Documents/Ariam_Hanan/mapping/files/Proteins.csv";
+        rml:source "dataset/Proteins.csv";
         rml:referenceFormulation ql:CSV
       ];
 
@@ -82,7 +82,7 @@ a rr:TriplesMap;
 <DDITripleMap>
           a rr:TriplesMap;
             rml:logicalSource [
-              rml:source "C:/Users/begaliha/Documents/Ariam_Hanan/mapping/files/PharmacokineticDDI.csv";
+              rml:source "dataset/PharmacokineticDDI.csv";
               rml:referenceFormulation ql:CSV
             ];
 
@@ -128,7 +128,7 @@ a rr:TriplesMap;
 <DPITripleMap>
   a rr:TriplesMap;
       rml:logicalSource [
-      rml:source "C:/Users/begaliha/Documents/Ariam_Hanan/mapping/files/DPI.csv";
+      rml:source "dataset/DPI.csv";
       rml:referenceFormulation ql:CSV
     ];
 
@@ -189,7 +189,7 @@ a rr:TriplesMap;
 <DPIpubmedTripleMap>
 a rr:TriplesMap;
   rml:logicalSource [
-  rml:source "C:/Users/begaliha/Documents/Ariam_Hanan/mapping/files/dpi_pubmed.csv";
+  rml:source "dataset/dpi_pubmed.csv";
   rml:referenceFormulation ql:CSV
 ];
 
