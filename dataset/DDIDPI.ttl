@@ -10,7 +10,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#>.
 @prefix uniprotprotein: <http://purl.uniprot.org/uniprot/>.
 @prefix uniprotgene: <http://purl.uniprot.org/geneid/>.
-@prefix pubmed: <http://purl.uniprot.org/uniprot/pubmed/>.
+@prefix pubmed: <http://purl.uniprot.org/pubmed/>.
 @prefix ddidpi: <http://www.project-ddidpi.de/vocab/> .
 @base <http://www.project-ddidpi.de/>.
 
@@ -204,7 +204,7 @@ rr:subjectMap [
       rr:predicateObjectMap [
           rr:predicate ddidpi:hasPubMedID;
             rr:objectMap [
-             rr:template "http://purl.uniprot.org/uniprot/pubmed/{Pubmed_ids}"
+             rr:template "http://purl.uniprot.org/pubmed/{Pubmed_ids}"
 
          ]
      ].
