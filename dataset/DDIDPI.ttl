@@ -147,8 +147,8 @@ a rr:TriplesMap;
     rr:predicateObjectMap [
         rr:predicate ddidpi:hasProteinIDforInteraction;
           rr:objectMap [
-      #   rr:template "http://www.project-ddidpi.de/Protein/{Uniprot_id}";
-        rr:template "http://purl.uniprot.org/uniprot/{Uniprot_id}"
+		  rr:template "http://www.project-ddidpi.de/Protein/{Uniprot_id}";
+          # rr:template "http://purl.uniprot.org/uniprot/{Uniprot_id}"
         ]
     ];
           rr:predicateObjectMap [
