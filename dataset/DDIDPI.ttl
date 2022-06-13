@@ -222,3 +222,42 @@ rr:subjectMap [
 
          ]
      ].
+	 
+	 
+
+<InteractWithTripleMap>
+     a rr:TriplesMap;
+             rml:logicalSource [
+               rml:source "dataset/DPI.csv";
+               rml:referenceFormulation ql:CSV
+               ];
+
+               rr:subjectMap [
+                 rr:template "http://www.project-ddidpi.de/Drug/{Drugbank_id}";
+                 rr:class ddidpi:Drug
+                 ];
+
+              rr:predicateObjectMap [
+       		    rr:predicate ddidpi:interactsWith;
+               rr:objectMap [
+       			  rr:template "http://www.project-ddidpi.de/Protein/{Uniprot_id}";
+               ]
+             ].
+<InteractWithaTripleMap>
+a rr:TriplesMap;
+      rml:logicalSource [
+        rml:source "dataset/DPI.csv";
+        rml:referenceFormulation ql:CSV
+        ];
+
+        rr:subjectMap [
+          rr:template "http://www.project-ddidpi.de/Protein/{Uniprot_id}";
+          rr:class ddidpi:Protein
+          ];
+
+       rr:predicateObjectMap [
+		    rr:predicate ddidpi:interactsWith;
+        rr:objectMap [
+			  rr:template "http://www.project-ddidpi.de/Drug/{Drugbank_id}";
+        ]
+      ].
