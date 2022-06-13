@@ -45,7 +45,7 @@ a rr:TriplesMap;
         rr:predicateObjectMap [
           rr:predicate ddidpi:hasDBpediaResource;
           rr:objectMap [
-          rr:template "http://dbpedia.org/DBpediaResource/{DrugName}";
+          rr:template "http://dbpedia.org/resource/{DrugName}";
           ]
         ];
         rr:predicateObjectMap [
