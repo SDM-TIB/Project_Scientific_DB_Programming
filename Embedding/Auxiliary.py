@@ -99,11 +99,13 @@ def pipeline_kge(args):
         recall = 0
         f_measure = 0
         for i in range(0, k):
-            tf_dataset, triple_dataset = load_dataset(path, 'ddidpi_v1.ttl')
-            training, testing = tf_dataset.split(random_state=1234)
+            training, triple_dataset = load_dataset(path, 'train_set.ttl')
+            testing, triple_dataset = load_dataset(path, 'test_set.ttl')
+            # training, testing = tf_dataset.split(random_state=1234)
             
             model, results = create_model(training, testing, m, epochs, path, i + 1)
             #model = torch.load(path + m + str(i + 1) + '/trained_model.pkl') # , map_location='cpu'
+#            predicted_heads_eff = predict_heads(model, 'ex:belong_to', 'ex:effective', tf_testing) #tf_training
 
 
 def filter_prediction(predicted_heads_df, constraint):
@@ -139,6 +141,36 @@ def plot_score_value(score_values, title):
     plt.title(title)
     plt.show()
     plt.close()
+
+
+def predict_tail(model, sub, prop, tf_testing):  # triples_factory=results.training
+    predicted_tails_df = predict.get_tail_prediction_df(model, sub, prop, triples_factory=tf_testing)
+    predicted_tails_df = filter_prediction_tail(predicted_tails_df, 'Protein:')
+    predicted_tails_df = reset_index(predicted_tails_df)
+    return predicted_tails_df
+
+
+def filter_prediction_tail(predicted_tails_df, constraint):
+    predicted_tails_df = predicted_tails_df[predicted_tails_df.tail_label.str.contains(constraint)]
+    return predicted_tails_df
+
+
+def get_precision(predicted_tails, cut_off):
+    tp_fp = predicted_tails.iloc[:cut_off]
+    tp = tp_fp.loc[tp_fp.in_training == True].shape[0]
+    prec = tp / tp_fp.shape[0]
+    return prec, tp
+
+
+def get_recall(predicted_tails, tp):
+    tp_fn = predicted_tails.loc[predicted_tails.in_training == True].shape[0]
+    rec = tp / tp_fn
+    return rec
+
+
+def get_f_measure(precision, recall):
+    f_measure = 2 * (precision * recall) / (precision + recall)
+    return f_measure
 
 
 def get_learned_embeddings(model):
